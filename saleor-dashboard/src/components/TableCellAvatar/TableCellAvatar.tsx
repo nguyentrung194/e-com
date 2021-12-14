@@ -1,0 +1,43 @@
+import { TableCell } from "@material-ui/core";
+import { TableCellProps } from "@material-ui/core/TableCell";
+import { makeStyles } from "@saleor/macaw-ui";
+import classNames from "classnames";
+import React from "react";
+
+import Avatar, { AvatarProps } from "./Avatar";
+
+const useStyles = makeStyles(
+  theme => ({
+    root: {
+      "&:not(first-child)": {
+        paddingLeft: 0
+      },
+      paddingRight: theme.spacing(3),
+      width: "1%"
+    }
+  }),
+  { name: "TableCellAvatar" }
+);
+
+interface TableCellAvatarProps extends AvatarProps, TableCellProps {
+  className?: string;
+  badge?: React.ReactNode;
+}
+
+const TableCellAvatar: React.FC<TableCellAvatarProps> = props => {
+  const { className, badge, ...rest } = props;
+
+  const classes = useStyles(props);
+
+  return (
+    <TableCell
+      className={classNames(classes.root, className)}
+      {...rest}
+      data-test-id="tableCellAvatar"
+    >
+      <Avatar badge={badge} {...rest} />
+    </TableCell>
+  );
+};
+
+export default TableCellAvatar;
